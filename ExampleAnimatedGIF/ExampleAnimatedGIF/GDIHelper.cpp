@@ -36,6 +36,7 @@ void GDIHelper::Stop(UINT_PTR ttimer_id) {
 
     KillTimer(hwnd, ttimer_id);
     m_bIsPlaying = FALSE;
+    isPlayable = FALSE;
 }
 
 
@@ -92,7 +93,7 @@ void GDIHelper::InitializeImage() {
 
     if(m_FrameCount > 1) { //frame of GIF is more than one, all good, we don't want the error of `Access violation reading location`
         isPlayable = TRUE;
-        OutputDebugString(_T("ERROR: GDIHelper::Load >> GIF file has only 1 frame, its not playable.\n"));
+        OutputDebugString(_T("ERROR: GDIHelper::InitializeImage >> Image file contains more than 1 frame, its playable.\n"));
     }
 
     UINT TotalBuffer = m_pImage->GetPropertyItemSize(PropertyTagFrameDelay);
