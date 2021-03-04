@@ -283,4 +283,4 @@ Then on your **WndProc**,  you can load from a file or resources and draw the im
 Visual Studio 2019 Enterprise
 
 **Language**
-C++
+C++, Win32Api, GDI+
