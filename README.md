@@ -14,15 +14,15 @@ Create a Header file **GDIHelper.h**.
     
     #ifndef GDIHELPER_H
     #define GDIHELPER_H
-    #include <windows.h>							//GDI+ include in order (1) 
-	#include <tchar.h>
-	#include <string>
-	#include <objidl.h>								 //GDI+ include in order (2)
-	#include <gdiplus.h>							  //GDI+ include in order (3)
-	using namespace std;
-	using namespace Gdiplus;				       //GDI+ include in order (4)
-	#pragma comment (lib,"Gdiplus.lib")		 //GDI+ include in order (5)
-	#pragma comment(lib, "dwmapi.lib")		//GDI+ include in order (6)
+    #include <windows.h>			//GDI+ include in order (1) 
+    #include <tchar.h>
+    #include <string>
+    #include <objidl.h>				//GDI+ include in order (2)
+    #include <gdiplus.h>			//GDI+ include in order (3)
+    using namespace std;
+    using namespace Gdiplus;			//GDI+ include in order (4)
+    #pragma comment (lib,"Gdiplus.lib")		//GDI+ include in order (5)
+    #pragma comment(lib, "dwmapi.lib")		//GDI+ include in order (6)
 
      /** Don't forget to initialize the GDI+ **/
     
@@ -276,3 +276,11 @@ Then on your **WndProc**,  you can load from a file or resources and draw the im
         }
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
+    
+ 
+
+**IDE**
+Visual Studio 2019 Enterprise
+
+**Language**
+C++
