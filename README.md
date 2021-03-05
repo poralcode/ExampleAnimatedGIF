@@ -55,6 +55,7 @@ Create a Header file **GDIHelper.h**.
     #endif
 
 Create a CPP file **GDIHelper.cpp**.
+    
     #include "GDIHelper.h"
     
     /** GDIHelper is a class helper to display images and animated GIF **/
