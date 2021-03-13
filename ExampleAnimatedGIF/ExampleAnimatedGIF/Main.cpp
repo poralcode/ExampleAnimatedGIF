@@ -7,7 +7,7 @@ static TCHAR szTitle[] = _T("Example Animated GIF");
 HINSTANCE hInst;
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-#define ID_OF_YOUR_TIMER 5576
+#define YOUR_UNIQUE_ID 5576
 
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
     // Initialize GDI+.
@@ -58,12 +58,13 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         DispatchMessage(&msg);
     }
 
-    GdiplusShutdown(gdiplusToken); //dont forget to shut it down.
+    GdiplusShutdown(gdiplusToken); //dont forget to shut down the gdi+ token.
     return (int)msg.wParam;
 }
 
+GDIHelper gdiHelper;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    GDIHelper gdiHelper;
     switch(message) {
     case WM_ACTIVATE:
     {
@@ -73,12 +74,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         break;
     }
     case WM_CREATE: {
-        //gdiHelper.LoadImageFromFile(hWnd, ID_OF_YOUR_TIMER, "C:\\Users\\archd\\Downloads\\spinner.gif", L"GIF");
-        gdiHelper.LoadImageFromResource(hWnd, ID_OF_YOUR_TIMER, GetModuleHandle(NULL), MAKEINTRESOURCE(ID_OF_YOUR_RESOURCE_FILE), L"GIF"); //(1)
-        break;
-    }
-    case WM_TIMER: {
-        gdiHelper.OnTimer(); //(2)
+
+        /* Display the image from local file (1)*/
+        gdiHelper.DisplayImageFromFile(
+            "C:\\Users\\USERNAME\\location\\your_gif.gif", //File location
+            hWnd,                                                     //Handle to the Window
+            YOUR_UNIQUE_ID,                                           //Unique ID of your control, declare your own.
+            165,                                                      //xPosition
+            100,                                                      //yPosition
+            95,                                                       //width 
+            95                                                        //height
+        );
+
+        /* Display the image from resources (1)*/
+        /*gdiHelper.DisplayImageFromResource(
+            GetModuleHandle(NULL),                       
+            MAKEINTRESOURCE(ID_OF_YOUR_RESOURCE_FILE),   //ID of your image from resource file
+            L"GIF",                                      //Type of image
+            hWnd,                                        //Handle to the Window
+            YOUR_UNIQUE_ID,                              //Unique ID of your control, declare your own.
+            165,                                         //xPosition
+            100,                                         //yPosition
+            95,                                          //width 
+            95                                           //height
+        ); */
+
         break;
     }
     case WM_PAINT:
@@ -86,18 +106,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         HDC hdc;
         PAINTSTRUCT ps;
         hdc = BeginPaint(hWnd, &ps);
-       
-        gdiHelper.DrawItem(hdc, 160, 150, 95, 95); //(3) hdc, xposition, yposition, width, height
-       
+
+        //Paint other images and text here...
+        Graphics graphics(hdc);
+        SolidBrush  brush(Color(225, 3, 3, 3));
+        FontFamily  fontFamily(L"Segoe UI");
+        Font        font(&fontFamily, 14, FontStyleRegular, UnitPixel);
+        PointF      pointF(78.0f, 220.0f);
+        graphics.DrawString(L"This text is not affected by GIF animation.", -1, &font, pointF, &brush);
+        //End of paint.
+        
         EndPaint(hWnd, &ps);
         break;
     }
     case WM_DESTROY:
     {
-        gdiHelper.Desrtroy();
+        /* Don't forget to call destroy. (2) */
+        gdiHelper.Destroy(); 
         PostQuitMessage(0);
         break;
     }
     }
     return DefWindowProc(hWnd, message, wParam, lParam);
+    
 }
