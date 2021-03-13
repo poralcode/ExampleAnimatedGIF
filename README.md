@@ -9,7 +9,7 @@ A Win32API example for displaying image such as PNG, JPEG, and animated GIF usin
 - Load image from resources.
 - Automatically animate GIF image.
 - Compatible with JPEG, JPG, BITMAP, GIF, PNG.
-- Non-Blocking UI animation.
+- Non-Blocking UI animation. (Dragging, Resizing Window, and holding Window Titlebar won't affect the animation.)
 
 ## How to use
 You can use the `DisplayImageFromFile()` function to display image from local file.
